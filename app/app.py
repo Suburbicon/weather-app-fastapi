@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from retry_requests import retry
+from json import loads, dumps
 import openmeteo_requests
 import requests_cache
 import pandas as pd
@@ -10,7 +11,7 @@ app = FastAPI()
 
 @app.get('/')
 def root():
-	return {"Hello": "World"}
+	return {"Hello": "W"}
 
 
 @app.get('/weather')
@@ -48,4 +49,9 @@ async def get_weather(lat, lon, s_date, e_date):
 	hourly_data["temperature_2m"] = hourly_temperature_2m
 
 	hourly_dataframe = pd.DataFrame(data = hourly_data)
-	print(hourly_dataframe)
+	print(hourly_dataframe.to_json)
+
+	data = hourly_dataframe.to_json(orient="split")
+	data = loads(data)
+
+	return { 'data': data }
