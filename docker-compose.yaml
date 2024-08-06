@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  weather-app:
+    image: weather-app:latest
+    container_name: weather-app
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - .:/code
+    ports:
+      - 80:80
+    
